@@ -1,6 +1,7 @@
 # main.py
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+import asyncio
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.responses import HTMLResponse
 from models import GameState, Character, Enemy, Spell, Ability
 from game import (
@@ -14,10 +15,17 @@ import uuid
 
 app = FastAPI()
 
+# Tracks all games
 active_connections: Dict[UUID, WebSocket] = {}
 
 @app.post("/start_game/")
-def start_game(player_id: UUID):
+async def start_game(request: Request):
+    data = await request.json()
+    player_id = data.get('player_id', None)
+
+    if not player_id:
+        raise HTTPException(status_code=400, detail=f"Player ID is required. FastAPI received request: {request.json() = }")
+
     # Initialize game state
     game_state = GameState(
         player_id=player_id,
@@ -75,23 +83,25 @@ def start_game(player_id: UUID):
     return {"game_id": game_state.game_id}
 
 @app.post("/load_game/{game_id}")
-def load_game_endpoint(game_id: str):
+async def load_game_endpoint(request: Request):
+    data = await request.json()
+    game_id: str = data.get("game_id", None)
     game_state = load_game(game_id)
     if not game_state:
-        raise HTTPException(status_code=404, detail="Game not found")
+        raise HTTPException(status_code=404, detail=f"Game not found. FastAPI received request: {request.json() = }")
     return game_state
 
 @app.post("/action/{game_id}/attack/")
 def attack_action(game_id: str, attacker_id: UUID, target_id: UUID):
     game_state = load_game(game_id)
     if not game_state:
-        raise HTTPException(status_code=404, detail="Game not found")
+        raise HTTPException(status_code=404, detail=f"Game not found: {game_id = }")
     
     attacker = get_entity_by_id(game_state, attacker_id)
     target = get_entity_by_id(game_state, target_id)
     
     if not isinstance(attacker, Character) or not isinstance(target, Enemy):
-        raise HTTPException(status_code=400, detail="Invalid attacker or target")
+        raise HTTPException(status_code=400, detail=f"Invalid attacker or target: {attacker_id = }, {target_id = }\n{attacker = }, {target = } - The attacker must be a Character and the target must be an Enemy.")
     
     result = perform_attack(attacker, target, game_state)
     
@@ -128,17 +138,19 @@ def attack_action(game_id: str, attacker_id: UUID, target_id: UUID):
     save_game(game_state)
     return {"message": result['message'], "status": game_state.status}
 
+# main.py (FastAPI WebSocket handler)
+# Update the websocket_endpoint to send game state updates
 @app.websocket("/ws/{game_id}")
 async def websocket_endpoint(websocket: WebSocket, game_id: str):
     await websocket.accept()
     try:
         while True:
-            data = await websocket.receive_text()
-            # Here you can handle incoming messages from the frontend if needed
-            # For now, we'll just echo back the data
-            await websocket.send_text(f"Message text was: {data}")
+            # Send the current game state periodically or on changes
+            game_state = load_game(game_id)
+            if game_state:
+                await websocket.send_json(game_state.dict())
+            await asyncio.sleep(1)  # Adjust the interval as needed
     except WebSocketDisconnect:
-        # Handle disconnect
-        pass
+        print(f"WebSocket disconnected for game {game_id}")
 
 # You can add more endpoints for different actions like defend, skip, cast_spell, etc.
