@@ -1,0 +1,117 @@
+{
+    "game_id": "fdd1e60f-d27c-4272-ac7e-bdb008deb585",
+    "player_id": "c0f6529c-bd80-456e-9ddf-8388405d5819",
+    "characters": [
+        {
+            "id": "9539c1f9-24b4-432d-8cbf-513d8b3646e4",
+            "name": "Hero",
+            "level": 1,
+            "experience": 0,
+            "stats": {
+                "health": 111.1,
+                "max_health": 111.1,
+                "physical_defense": 12.1,
+                "magical_defense": 7.1,
+                "mana_points": 56.1,
+                "max_mana_points": 56.1,
+                "ability_points": 34.1,
+                "max_ability_points": 34.1,
+                "attack_damage": 45.1,
+                "spell_damage": 34.1,
+                "hit_count": 1.0,
+                "agility": 1.2100000000000002,
+                "accuracy": 1.9100000000000001,
+                "critical_hit_chance": 1.1600000000000001,
+                "action_speed": 12.1
+            },
+            "base_stats": {
+                "strength": 10.8,
+                "dexterity": 8.8,
+                "intelligence": 4.9,
+                "speed": 6.6
+            },
+            "equipment": {
+                "head": null,
+                "chest": null,
+                "feet": null,
+                "mainhand": null,
+                "offhand": null,
+                "twohand": null,
+                "accessory": null
+            },
+            "spells": {},
+            "abilities": {
+                "heavy_attack": 1
+            },
+            "owner_id": "43691915-af6c-4b07-a3db-b5ce3771b14d",
+            "status_effects": [],
+            "is_defending": false,
+            "is_vulnerable": false
+        }
+    ],
+    "enemies": [
+        {
+            "id": "1caac95b-2990-485d-bbfc-e06881347751",
+            "name": "Goblin",
+            "level": 1,
+            "stats": {
+                "health": 58,
+                "max_health": 58,
+                "physical_defense": 7,
+                "magical_defense": 3,
+                "mana_points": 22,
+                "max_mana_points": 22,
+                "ability_points": 12,
+                "max_ability_points": 12,
+                "attack_damage": 24,
+                "spell_damage": 6,
+                "hit_count": 1,
+                "agility": 0.055,
+                "accuracy": 0.86,
+                "critical_hit_chance": 0.022,
+                "action_speed": 8.6
+            },
+            "base_stats": {
+                "strength": 5.833333333333333,
+                "intelligence": 3.5,
+                "dexterity": 4.666666666666667,
+                "speed": 2.3333333333333335
+            },
+            "spells": [],
+            "abilities": [
+                {
+                    "name": "Heavy Attack Lvl. 1",
+                    "description": "A moderate physical attack with high accuracy. Damage increases with Ability level.",
+                    "type": "damage",
+                    "cost": 5,
+                    "effects": [
+                        {
+                            "type": "damage",
+                            "target_stat": null,
+                            "value": 37.0,
+                            "duration": 1,
+                            "is_percentage": false
+                        }
+                    ],
+                    "target_type": "single",
+                    "accuracy_bonus": 0.5,
+                    "critical_bonus": 0.12000000000000001,
+                    "cooldown": 0,
+                    "current_cooldown": 0
+                }
+            ],
+            "status_effects": [],
+            "is_defending": false,
+            "is_vulnerable": false,
+            "is_undead": false,
+            "power": 110
+        }
+    ],
+    "wave": 1,
+    "turn_order": [
+        "9539c1f9-24b4-432d-8cbf-513d8b3646e4",
+        "1caac95b-2990-485d-bbfc-e06881347751"
+    ],
+    "current_turn": 0,
+    "status": "ongoing"
+}

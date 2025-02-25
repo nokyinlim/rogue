@@ -69,11 +69,11 @@ class Character(BaseModel):
     name: str
     level: int = 1
     experience: int = 0
-    stats: Dict[str, Any]  # Includes all mutable stats
-    base_stats: Dict[str, int]  # Strength, Intelligence, Dexterity, Speed
+    stats: Dict[str, float]  # Includes all mutable stats
+    base_stats: Dict[str, float]  # Strength, Intelligence, Dexterity, Speed
     equipment: Dict[str, Optional[Equipment]] = {slot: None for slot in EQUIPMENT_SLOTS}
-    spells: List[Spell] = []
-    abilities: List[Ability] = []
+    spells: Dict[str, int] = {} # Spell ID to level
+    abilities: Dict[str, int] = {} # Ability ID to level
     owner_id: UUID
     status_effects: List[StatusEffect] = []
     is_defending: bool = False # Significantly reduces incoming damage
@@ -84,11 +84,14 @@ class Enemy(BaseModel):
     name: str
     level: int
     stats: Dict[str, Any]
+    base_stats: Dict[str, float]
     spells: List[Spell] = []
     abilities: List[Ability] = []
     status_effects: List[StatusEffect] = []
     is_defending: bool = False
     is_vulnerable: bool = False
+    is_undead: bool = False
+    power: int = 0 # Used for scaling difficulty and deciding how many enemies to spawn
 
 class GameState(BaseModel):
     """Represents the current state of a game."""
@@ -101,7 +104,7 @@ class GameState(BaseModel):
     enemies: List[Enemy] = []
     """List of enemies."""
     wave: int = 1
-    """Current wave/level. Scales infinitely and difficulty based off the wave.'"""
+    """Current wave/level. Scales infinitely and difficulty based off the wave."""
     turn_order: List[UUID] = [] 
     """Order in which characters and enemies take"""
     current_turn: int = 0

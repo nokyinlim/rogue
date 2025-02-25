@@ -1,0 +1,89 @@
+{
+    "game_id": "70b24f4c-ea93-4571-b683-59c95722502e",
+    "player_id": "32a61ca8-434d-474a-896c-d7393c4112b1",
+    "characters": [
+        {
+            "id": "f15a94a3-148e-4b06-ae00-f3e9bad6ad07",
+            "name": "Hero",
+            "level": 1,
+            "experience": 0,
+            "stats": {
+                "health": 60,
+                "max_health": 100,
+                "physical_defense": 10,
+                "magical_defense": 5,
+                "mana_points": 50,
+                "ability_points": 30,
+                "attack_damage": 15,
+                "spell_damage": 10,
+                "hit_count": 1,
+                "agility": 0.1,
+                "accuracy": 0.8,
+                "critical_hit_chance": 0.05,
+                "action_speed": 10
+            },
+            "base_stats": {
+                "strength": 5,
+                "intelligence": 3,
+                "dexterity": 4,
+                "speed": 2
+            },
+            "equipment": {
+                "head": null,
+                "chest": null,
+                "feet": null,
+                "mainhand": null,
+                "offhand": null,
+                "twohand": null,
+                "accessory": null
+            },
+            "spells": [],
+            "abilities": [],
+            "owner_id": "32a61ca8-434d-474a-896c-d7393c4112b1",
+            "status_effects": [],
+            "is_defending": false,
+            "is_vulnerable": false
+        }
+    ],
+    "enemies": [
+        {
+            "id": "a1faada0-8ab1-4b78-9da0-65e1a4eee1ce",
+            "name": "Goblin",
+            "level": 1,
+            "stats": {
+                "health": 0,
+                "max_health": 50,
+                "physical_defense": 5,
+                "magical_defense": 2,
+                "mana_points": 20,
+                "ability_points": 10,
+                "attack_damage": 20,
+                "spell_damage": 5,
+                "hit_count": 1,
+                "agility": 0.05,
+                "accuracy": 0.85,
+                "critical_hit_chance": 0.02,
+                "action_speed": 8
+            },
+            "base_stats": {
+                "strength": 5,
+                "intelligence": 3,
+                "dexterity": 4,
+                "speed": 2
+            },
+            "spells": [],
+            "abilities": [],
+            "status_effects": [],
+            "is_defending": false,
+            "is_vulnerable": false,
+            "is_undead": false
+        }
+    ],
+    "wave": 1,
+    "turn_order": [
+        "f15a94a3-148e-4b06-ae00-f3e9bad6ad07",
+        "a1faada0-8ab1-4b78-9da0-65e1a4eee1ce"
+    ],
+    "current_turn": 0,
+    "status": "victory"
+}
