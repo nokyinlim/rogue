@@ -78,9 +78,10 @@ def apply_effect(source: Union[Character, Enemy], target: Union[Character, Enemy
         damage_reduction = defense / (defense + 50)
         actual_damage = max(1, base_damage * (1 - damage_reduction))
         
-        # Apply defending reduction
+        # Apply defending reduction (*0.3)
         if target.is_defending:
-            actual_damage *= 0.5
+            from constants import DEFENDING_DAMAGE_MULTIPLIER
+            actual_damage *= DEFENDING_DAMAGE_MULTIPLIER
         
         # Apply damage
         target.stats['health'] -= int(actual_damage)
@@ -94,7 +95,7 @@ def apply_effect(source: Union[Character, Enemy], target: Union[Character, Enemy
         
         target.stats['health'] += int(healing)
         target.stats['health'] = min(target.stats['health'], target.stats['max_health'])
-        message = f"Heals {target.name} for {int(healing)} health."
+        message = f"Healed {target.name} for {int(healing)} health."
     
     elif effect.type in ['buff', 'debuff']:
         status = StatusEffect(
@@ -146,8 +147,10 @@ def process_status_effects(entity: Character | Enemy, game_state: GameState):
     
     return {"message": " ".join(messages)}
 
-def cast_spell(caster: Union[Character, Enemy], spell: Spell, target: Union[Character, Enemy, List[Union[Character, Enemy]]], game_state: GameState):
+def cast_spell(caster: Union[Character, Enemy], spell: Spell, target: Character | Enemy | List[Union[Character, Enemy]], game_state: GameState):
     """Cast a spell on target(s)"""
+
+    print(f"[Debug] {caster.name} casts {spell.name} of type {spell.type}")
     if caster.stats['mana_points'] < spell.cost:
         return {"message": f"Not enough mana to cast {spell.name}.", "success": False}
     
@@ -223,4 +226,4 @@ def process_turn(game_state: GameState):
     
     return game_state
 
-# Add more game logic functions as needed
+# ... 

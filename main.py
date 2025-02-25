@@ -153,4 +153,4 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str):
     except WebSocketDisconnect:
         print(f"WebSocket disconnected for game {game_id}")
 
-# You can add more endpoints for different actions like defend, skip, cast_spell, etc.
+# defend, skip, spell, ability endpoints not created

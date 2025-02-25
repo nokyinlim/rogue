@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from uuid import uuid4, UUID
 
 # Equipment Slots
-EQUIPMENT_SLOTS = ['head', 'chest', 'feet', 'mainhand', 'offhand', 'twohand', 'accessory']
+EQUIPMENT_SLOTS: List[str] = ['head', 'chest', 'feet', 'mainhand', 'offhand', 'twohand', 'accessory']
 
 class StatModifiers(BaseModel):
     health: int = 0
@@ -26,7 +26,7 @@ class Equipment(BaseModel):
 
 class Effect(BaseModel):
     """Defines a single effect that can be part of spells or abilities"""
-    type: str  # 'damage', 'heal', 'buff', 'debuff', 'dot', 'hot'
+    type: str  # 'damage', 'heal', 'buff', 'debuff', 'dot' (damage), 'hot' (heal)
     target_stat: Optional[str] = None  # For buffs/debuffs, which stat to modify
     value: float  # Amount of effect (damage, healing, stat change)
     duration: int = 1  # Number of turns effect lasts (1 for instant)
@@ -63,7 +63,8 @@ class StatusEffect(BaseModel):
 
 class Character(BaseModel):
     """Represents a player-controlled character.
-    Includes all mutable stats, base stats, equipment, spells, abilities, and status effects."""
+    Includes all mutable stats, base stats, equipment, spells, abilities, 
+    and status effects."""
     id: UUID = Field(default_factory=uuid4)
     name: str
     level: int = 1
@@ -75,8 +76,8 @@ class Character(BaseModel):
     abilities: List[Ability] = []
     owner_id: UUID
     status_effects: List[StatusEffect] = []
-    is_defending: bool = False
-    is_vulnerable: bool = False
+    is_defending: bool = False # Significantly reduces incoming damage
+    is_vulnerable: bool = False # Significantly increases incoming damage
 
 class Enemy(BaseModel):
     id: UUID = Field(default_factory=uuid4)
